@@ -12,6 +12,12 @@ import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
 import static junit.framework.TestCase.assertEquals;
+import static org.hamcrest.Matchers.containsString;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.collection.IsEmptyCollection.empty;
+import static org.junit.Assert.assertThat;
+
 
 /**
  * Created by bryon on 2/22/18.
@@ -44,9 +50,9 @@ public class BDDTestPlantDAO {
     }
 
     @Test
-    public void testPlantDAO_fetchSHouldReturnNothingForJibberish() throws IOException, JSONException {
+    public void testPlantDAO_fetchSHouldReturnNothingForGibberish() throws IOException, JSONException {
         givenPlantDAOIsInitialized();
-        whenSearchForJibberish();
+        whenSearchForGibberish();
         thenVerifyNoResults();
     }
 
@@ -103,18 +109,17 @@ public class BDDTestPlantDAO {
 
     private void thenVerifyAllGenusAreQuercus() {
         for (PlantDTO plant : plants) {
-            assertEquals("Quercus", plant.getGenus());
+            assertThat(plant, hasProperty("genus", equalTo("Quercus")));
         }
     }
 
-    // methods for testPlantDAO_fetchSHouldReturnNothingForJibberish()
+    // methods for testPlantDAO_fetchSHouldReturnNothingForGibberish()
 
-    private void whenSearchForJibberish() throws IOException, JSONException {
+    private void whenSearchForGibberish() throws IOException, JSONException {
         plants = plantDAO.fetchPlants("sklujap");
     }
 
     private void thenVerifyNoResults() {
-        int size = plants.size();
-        assertEquals(0, size);
+        assertThat(plants, empty());  // simpler with hamcrest
     }
 }
