@@ -5,6 +5,9 @@ import com.bryonnicoson.plantpractice.dao.PlantDAOStub;
 import com.bryonnicoson.plantpractice.dao.PlantJsonDao;
 import com.bryonnicoson.plantpractice.dto.PlantDTO;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -20,7 +23,7 @@ public class PlantService implements IPlantService {
     }
 
     @Override
-    public List<PlantDTO> fetchPlants(String filter) {
+    public List<PlantDTO> fetchPlants(String filter) throws IOException, JSONException {
         return plantDAO.fetchPlants(filter);
     }
 }

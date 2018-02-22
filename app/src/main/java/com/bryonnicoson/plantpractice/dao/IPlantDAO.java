@@ -2,6 +2,9 @@ package com.bryonnicoson.plantpractice.dao;
 
 import com.bryonnicoson.plantpractice.dto.PlantDTO;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -15,6 +18,6 @@ public interface IPlantDAO {
      *  @param filter the text we want to match in our returned list of plants.
      *  @return a list of plants that contain the given filter text in either genus, species, cultivar, or common.
      */
-    public List<PlantDTO> fetchPlants(String filter);
+    List<PlantDTO> fetchPlants(String filter) throws IOException, JSONException;
 
 }

@@ -2,6 +2,9 @@ package com.bryonnicoson.plantpractice.service;
 
 import com.bryonnicoson.plantpractice.dto.PlantDTO;
 
+import org.json.JSONException;
+
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -17,5 +20,5 @@ public interface IPlantService {
      * @return a list of plants that match the specified search criteria
      */
 
-    List<PlantDTO> fetchPlants(String filter);
+    List<PlantDTO> fetchPlants(String filter) throws IOException, JSONException;
 }
