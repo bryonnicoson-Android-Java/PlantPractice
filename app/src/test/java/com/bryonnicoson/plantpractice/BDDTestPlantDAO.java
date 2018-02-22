@@ -29,9 +29,32 @@ public class BDDTestPlantDAO {
         thenVerifyAtLeastOneCerisCanadensis();
     }
 
+    @Test
+    public void testPlantDAO_fetchShouldReturnAtLeastTwoOaksForQuercus() throws IOException, JSONException {
+        givenPlantDAOIsInitialized();
+        whenSearchForQuercus();
+        thenVerifyTwoOaks();
+    }
+
+    @Test
+    public void testPlantDAO_fetchShouldReturnGenusQuercusForQuercus() throws IOException, JSONException {
+        givenPlantDAOIsInitialized();
+        whenSearchForQuercus();
+        thenVerifyAllGenusAreQuercus();
+    }
+
+    @Test
+    public void testPlantDAO_fetchSHouldReturnNothingForJibberish() throws IOException, JSONException {
+        givenPlantDAOIsInitialized();
+        whenSearchForJibberish();
+        thenVerifyNoResults();
+    }
+
     private void givenPlantDAOIsInitialized() {
         plantDAO = new PlantDAO();
     }
+
+    // methods for testPlantDAO_fetchSHouldReturnResultsForRedbud()
 
     private void whenSearchForRedbud() throws IOException, JSONException {
         plants = plantDAO.fetchPlants("Redbud");
@@ -50,12 +73,8 @@ public class BDDTestPlantDAO {
         assertTrue(redbudFound);
     }
 
-    @Test
-    public void testPlantDAO_fetchShouldReturnAtLeastTwoOaksForQuercus() throws IOException, JSONException {
-        givenPlantDAOIsInitialized();
-        whenSearchForQuercus();
-        thenVerifyTwoOaks();
-    }
+
+    // methods for testPlantDAO_fetchShouldReturnAtLeastTwoOaksForQuercus()
 
     private void whenSearchForQuercus() throws IOException, JSONException {
         plants = plantDAO.fetchPlants("Quercus");
@@ -80,12 +99,15 @@ public class BDDTestPlantDAO {
         assertTrue(quercusAlbaFound);
     }
 
-    @Test
-    public void testPlantDAO_fetchSHouldReturnNothingForJibberish() throws IOException, JSONException {
-        givenPlantDAOIsInitialized();
-        whenSearchForJibberish();
-        thenVerifyNoResults();
+    // method for testPlantDAO_fetchShouldReturnGenusQuercusForQuercus()
+
+    private void thenVerifyAllGenusAreQuercus() {
+        for (PlantDTO plant : plants) {
+            assertEquals("Quercus", plant.getGenus());
+        }
     }
+
+    // methods for testPlantDAO_fetchSHouldReturnNothingForJibberish()
 
     private void whenSearchForJibberish() throws IOException, JSONException {
         plants = plantDAO.fetchPlants("sklujap");
@@ -95,6 +117,4 @@ public class BDDTestPlantDAO {
         int size = plants.size();
         assertEquals(0, size);
     }
-
-
 }
