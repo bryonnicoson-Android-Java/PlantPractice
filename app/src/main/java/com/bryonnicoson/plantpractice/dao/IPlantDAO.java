@@ -13,6 +13,8 @@ import java.util.List;
 
 public interface IPlantDAO {
 
+    void setNetworkDAO(NetworkDAO networkDAO);
+
     /**
      *  Accept filter text, and return a collection of plants that contain that filter.
      *  @param filter the text we want to match in our returned list of plants.

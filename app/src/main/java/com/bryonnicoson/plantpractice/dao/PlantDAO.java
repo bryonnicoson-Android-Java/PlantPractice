@@ -18,12 +18,21 @@ public class PlantDAO implements IPlantDAO {
 
     private NetworkDAO networkDAO;
 
-    public PlantDAO() { networkDAO = new NetworkDAO(); }
+    public NetworkDAO getNetworkDAO() {
+        return networkDAO;
+    }
 
+    @Override
+    public void setNetworkDAO(NetworkDAO networkDAO) {
+        this.networkDAO = networkDAO;
+    }
+
+    public PlantDAO() { networkDAO = new NetworkDAO(); }
 
     @Override
     public List<PlantDTO> fetchPlants(String filter) throws IOException, JSONException {
-        ArrayList<PlantDTO> allPlants = new ArrayList<>();
+
+        ArrayList<PlantDTO> allPlants = new ArrayList<PlantDTO>();
 
         String request = networkDAO.fetch("http://plantplaces.com/perl/mobile/viewplantsjson.pl?Combined_Name=" + filter);
 

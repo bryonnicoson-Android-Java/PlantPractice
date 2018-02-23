@@ -10,6 +10,11 @@ import java.util.List;
 
 public class PlantJsonDao implements IPlantDAO {
     @Override
+    public void setNetworkDAO(NetworkDAO networkDAO) {
+
+    }
+
+    @Override
     public List<PlantDTO> fetchPlants(String filter) {
         return null;
     }

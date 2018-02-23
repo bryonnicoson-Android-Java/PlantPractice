@@ -1,6 +1,7 @@
 package com.bryonnicoson.plantpractice;
 
 import com.bryonnicoson.plantpractice.dao.IPlantDAO;
+import com.bryonnicoson.plantpractice.dao.NetworkDAO;
 import com.bryonnicoson.plantpractice.dao.PlantDAO;
 import com.bryonnicoson.plantpractice.dto.PlantDTO;
 
@@ -11,13 +12,11 @@ import java.io.IOException;
 import java.util.List;
 
 import static junit.framework.Assert.assertTrue;
-import static junit.framework.TestCase.assertEquals;
-import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.junit.Assert.assertThat;
-
+import static org.mockito.Mockito.*;
 
 /**
  * Created by bryon on 2/22/18.
@@ -29,7 +28,7 @@ public class BDDTestPlantDAO {
     private List<PlantDTO> plants;
 
     @Test
-    public void testPlantDAO_fetchSHouldReturnResultsForRedbud() throws IOException, JSONException {
+    public void testPlantDAO_fetchShouldReturnResultsForRedbud() throws IOException, JSONException {
         givenPlantDAOIsInitialized();
         whenSearchForRedbud();
         thenVerifyAtLeastOneCerisCanadensis();
@@ -50,14 +49,22 @@ public class BDDTestPlantDAO {
     }
 
     @Test
-    public void testPlantDAO_fetchSHouldReturnNothingForGibberish() throws IOException, JSONException {
+    public void testPlantDAO_fetchShouldReturnNothingForGibberish() throws IOException, JSONException {
         givenPlantDAOIsInitialized();
         whenSearchForGibberish();
         thenVerifyNoResults();
     }
 
-    private void givenPlantDAOIsInitialized() {
+    private void givenPlantDAOIsInitialized() throws IOException {
         plantDAO = new PlantDAO();
+
+        // mock NetworkDAO
+        NetworkDAO networkDAO = mock(NetworkDAO.class);
+        when(networkDAO.fetch("http://plantplaces.com/perl/mobile/viewplantsjson.pl?Combined_Name=sklujap")).thenReturn(gibberishJSON);
+        when(networkDAO.fetch("http://plantplaces.com/perl/mobile/viewplantsjson.pl?Combined_Name=Quercus")).thenReturn(quercusJSON);
+        when(networkDAO.fetch("http://plantplaces.com/perl/mobile/viewplantsjson.pl?Combined_Name=Redbud")).thenReturn(redbudJSON);
+
+        plantDAO.setNetworkDAO(networkDAO);
     }
 
     // methods for testPlantDAO_fetchSHouldReturnResultsForRedbud()
@@ -122,4 +129,14 @@ public class BDDTestPlantDAO {
     private void thenVerifyNoResults() {
         assertThat(plants, empty());  // simpler with hamcrest
     }
+
+    String redbudJSON = "{\"plants\":[" +
+            "{\"id\":\"83\",\"genus\":\"Cercis\",\"species\":\"canadensis\",\"cultivar\":\"\",\"common\":\"Eastern Redbud\"}]}\"";
+
+    String quercusJSON = "{\"plants\":[" +
+            "{\"id\":\"286\",\"genus\":\"Quercus\",\"species\":\"robur\",\"cultivar\":\"\",\"common\":\"Sawtooth Oak\"}," +
+            "{\"id\":\"182\",\"genus\":\"Quercus\",\"species\":\"alba\",\"cultivar\":\"\",\"common\":\"White Oak\"}" +
+            "]}";
+
+    String gibberishJSON = "{\"plants\":[]}-1";
 }
