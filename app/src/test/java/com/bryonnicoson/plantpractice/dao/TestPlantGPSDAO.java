@@ -1,4 +1,4 @@
-package com.bryonnicoson.plantpractice;
+package com.bryonnicoson.plantpractice.dao;
 
 import org.junit.Test;
 
