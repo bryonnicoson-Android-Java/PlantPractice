@@ -1,4 +1,4 @@
-package com.bryonnicoson.plantpractice;
+package com.bryonnicoson.plantpractice.plantpractice;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.bryonnicoson.plantpractice.dao;
+package com.bryonnicoson.plantpractice.plantpractice;
 
 import com.bryonnicoson.plantpractice.dao.NetworkDAO;
 
