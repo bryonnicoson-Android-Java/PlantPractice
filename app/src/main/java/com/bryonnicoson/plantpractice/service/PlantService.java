@@ -1,6 +1,7 @@
 package com.bryonnicoson.plantpractice.service;
 
 import com.bryonnicoson.plantpractice.dao.IPlantDAO;
+import com.bryonnicoson.plantpractice.dao.PlantDAO;
 import com.bryonnicoson.plantpractice.dao.PlantDAOStub;
 import com.bryonnicoson.plantpractice.dao.PlantJsonDao;
 import com.bryonnicoson.plantpractice.dto.PlantDTO;
@@ -19,7 +20,7 @@ public class PlantService implements IPlantService {
     IPlantDAO plantDAO;
 
     public PlantService() {
-        plantDAO = new PlantDAOStub();
+        plantDAO = new PlantDAO();
     }
 
     @Override

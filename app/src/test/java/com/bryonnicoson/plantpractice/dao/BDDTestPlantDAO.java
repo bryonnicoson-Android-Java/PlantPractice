@@ -1,8 +1,5 @@
 package com.bryonnicoson.plantpractice.dao;
 
-import com.bryonnicoson.plantpractice.dao.IPlantDAO;
-import com.bryonnicoson.plantpractice.dao.NetworkDAO;
-import com.bryonnicoson.plantpractice.dao.PlantDAO;
 import com.bryonnicoson.plantpractice.dto.PlantDTO;
 
 import org.json.JSONException;
